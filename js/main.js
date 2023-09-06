@@ -314,4 +314,29 @@ Vue.component('note', {
                 }
             }
         },
-    }})
+    },
+    mounted() {
+        eventBus.$on('note-created', note => {
+            this.notes.push(note)
+        })
+        eventBus.$on('note-updated', note => {
+            for (el in this.notes) {
+                if (this.notes[el].noteId == note.noteId) {
+                    console.log(this.notes[el])
+                    this.notes[el].title = note.title
+                    this.notes[el].description = note.description
+                    this.notes[el].dateDeadline = note.dateDeadline
+                    this.notes[el].dateUpdate = note.dateUpdate
+                }
+            }
+        })
+    },
+    data() {
+        return {
+            notes: [],
+            comment: '',
+        }
+    },
+})
+
+
