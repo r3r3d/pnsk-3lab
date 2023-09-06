@@ -46,4 +46,46 @@ Vue.component('create-note', {
                     </fieldset>
                 </form>
             </div>
-        `,}))
+        `,
+        methods: {
+            openUpdateNote() {
+                let display = true
+                eventBus.$emit('update-display', display)
+                let deadline = this.note.dateDeadline.split('.')
+                this.noteId = this.note.noteId
+                this.title = this.note.title
+                this.description = this.note.description
+                this.dateDeadline = deadline[2] + '-' + deadline[1] + '-' + deadline[0]
+            },
+            modal() {
+                let displayModal = false
+                eventBus.$emit('getModal', displayModal)
+            },
+            createNote() {
+                if (this.title && this.description && this.dateDeadline) {
+                    let inputDate = this.dateDeadline.split('-')
+                    let note = {
+                        noteId: this.noteId += 1,
+                        title: this.title,
+                        description: this.description,
+                        type: 'col-1',
+                        dateCreate: new Date().toLocaleDateString(),
+                        dateDeadline: inputDate[2] + '.' + inputDate[1] + '.' + inputDate[0],
+                        dateUpdate: '',
+                        dateComplite: '',
+                        comment: '',
+                        compliteInTime: ''
+                    }
+                    eventBus.$emit('note-created', note)
+                    this.title = null
+                    this.description = null
+                    this.dateDeadline = null
+                    this.errors = []
+                    this.modal()
+                } else {
+                    this.errors = []
+                    if (!this.title) this.errors.push("Введите заголовок!")
+                    if (!this.description) this.errors.push("Введите описание задачи!")
+                    if (!this.dateDeadline) this.errors.push("Введите дату дэдлайна!")
+                }
+            },}}))
