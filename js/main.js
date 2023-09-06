@@ -136,4 +136,65 @@ Vue.component('create-note', {
                 errors: []
             }
         },
-    }))
+    })
+    Vue.component('note', {
+            props: {
+                types: ''
+            },
+            
+            template: `
+                <div>
+                    <div class="m-3" v-for="note in notes" 
+                    v-show="note.type == types ">
+                        <div 
+                            class="p-3 " 
+                            :class="{ 
+                                'border-success': note.compliteInTime, 
+                                'border-danger': !note.compliteInTime && note.type == 'col-4', 
+                                'border-primary': !note.compliteInTime, 
+                                'border-warning': note.comment.length != 0,
+                            }"
+        >
+                            <h5>{{note.title}} 
+                            ({{note.noteId}}) - <span style="color: red;"
+                             v-on:click="deleteNote(note.noteId)">
+                             X
+                             </span>
+                             </h5>
+                            <p>{{ note.description }}</p>
+                            <p><hr>
+                            Дата создания: {{ note.dateCreate }}<br>
+                            Дэдлайн: {{ note.dateDeadline }} - {{ note.compliteInTime }}<br>
+                            <span v-if="note.dateUpdate.length != 0">
+                            Redact date: {{ note.dateUpdate }}</span>
+                            <hr>
+                            </p>
+                            <p v-if="note.comment.length > 0">
+                            Comments:<br>{{ note.comment }}</p>
+                            <div v-if="note.type != 'col-4'">
+                                <span class="btn " 
+                                v-on:click="noteUpdate(note)">
+                                Redact
+                                </span>
+                                <div class="mt-2">
+                                    <span class="btn " 
+                                    v-on:click="changeType(note)">
+                                    Next
+                                    </span>
+                                    <span v-if="note.type == 'col-3'" class="btn " 
+                                    v-on:click="comeBack(note)">back</span>
+                                    <div class="mt-3" v-if="note.type == 'col-3'">
+                                        <form>
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control comeback" id="textarea" 
+                                                style="height: 100px; resize: none;" v-model="comment"></textarea>
+                                                <label for="textarea">Причина возврата:</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,}))
