@@ -290,4 +290,28 @@ Vue.component('note', {
         },
         noteUpdate(note) {
             eventBus.$emit('update-note', note)
-        },}})
+        },
+        changeType(note) {
+            if (note.type == 'col-1') {
+                note.type = 'col-2'
+            } else {
+                if (note.type == 'col-2') {
+                    note.type = 'col-3'
+                } else {
+                    if (note.type == 'col-3') {
+                        note.type = 'col-4'
+                        let dateComplite = new Date().toLocaleDateString().split('.')
+                        let dateDeadline = note.dateDeadline.split('.')
+                        note.dateComplite = dateComplite
+                        if ( Number(dateComplite[2]) >= Number(dateDeadline[2]) ) {
+                            if ( Number(dateComplite[1]) >= Number(dateDeadline[1]) ) {
+                                if ( Number(dateComplite[0]) >= Number(dateDeadline[0]) ) {
+                                    note.compliteInTime = false
+                                } else { note.compliteInTime = true }
+                            } else { note.compliteInTime = true }
+                        } else { note.compliteInTime = true }
+                    }
+                }
+            }
+        },
+    }})
