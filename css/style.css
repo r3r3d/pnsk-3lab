@@ -1,0 +1,46 @@
+*{
+    font-family: cursive;
+    
+}
+
+.ded{
+    display: flex;
+    border: 3px solid lightgreen;
+    border-radius: 10px;
+    height: 700px;
+}
+
+
+body::-webkit-scrollbar {
+    display: none;
+} 
+
+.color-white {
+    color: rgb(255, 255, 255);
+}
+
+.markPoint {
+    text-decoration: line-through;
+}
+
+.display {
+    display: none;
+}
+
+.modal {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(192, 100, 100, 0.5);
+}
+
+#create-note {
+    width: 800px;
+}
+
+.comeback {
+    height: 150px;
+    width: 300px;
+}
