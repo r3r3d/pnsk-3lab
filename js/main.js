@@ -88,4 +88,32 @@ Vue.component('create-note', {
                     if (!this.description) this.errors.push("Введите описание задачи!")
                     if (!this.dateDeadline) this.errors.push("Введите дату дэдлайна!")
                 }
+            },
+            updateNote() {
+                if (this.title && this.description && this.dateDeadline) {
+                    let inputDate = this.dateDeadline.split('-')
+                    let updatedNote = {
+                        noteId: this.noteId,
+                        title: this.title,
+                        description: this.description,
+                        type: this.note.type,
+                        dateCreate: this.note.dateCreate,
+                        dateDeadline: inputDate[2] + '.' + inputDate[1] + '.' + inputDate[0],
+                        dateUpdate: new Date().toLocaleDateString(),
+                        dateComplite: '',
+                        comment: this.note.comment,
+                        compliteInTime: ''
+                    }
+                    eventBus.$emit('note-updated', updatedNote)
+                    this.title = null
+                    this.description = null
+                    this.dateDeadline = null
+                    this.errors = []
+                    this.update = false
+                } else {
+                    this.errors = []
+                    if (!this.title) this.errors.push("Введите заголовок!")
+                    if (!this.description) this.errors.push("Введите описание задачи!")
+                    if (!this.dateDeadline) this.errors.push("Введите дату дэдлайна!")
+                }
             },}}))
