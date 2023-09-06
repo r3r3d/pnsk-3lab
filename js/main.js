@@ -116,4 +116,24 @@ Vue.component('create-note', {
                     if (!this.description) this.errors.push("Введите описание задачи!")
                     if (!this.dateDeadline) this.errors.push("Введите дату дэдлайна!")
                 }
-            },}}))
+            },
+        },
+        mounted() {
+            eventBus.$on('update-note', note => {
+                this.note = note
+                this.update = true
+                this.openUpdateNote()
+            })
+        },
+        data() {
+            return {
+                noteId: 0,
+                title: '',
+                description: '',
+                dateDeadline: '',
+                note: '',
+                update: false,
+                errors: []
+            }
+        },
+    }))
