@@ -340,3 +340,29 @@ Vue.component('note', {
 })
 
 
+let app = new Vue({
+    el: '#app',
+    data: {
+        types: ['col-1', 'col-2', 'col-3', 'col-4'],
+        displayModal: false
+    },
+    
+    methods: {
+        modal() {
+            if (this.displayModal == false) {
+                this.displayModal = true
+            } else {
+                this.displayModal = false
+            }
+        }
+    },
+    mounted() {
+        eventBus.$on('getModal', displayModal => {
+            this.displayModal = displayModal
+        })
+        eventBus.$on('update-display', display => {
+            this.displayModal = display
+        })
+    },
+})
+
